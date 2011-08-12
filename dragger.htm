@@ -1,0 +1,161 @@
+<html>
+    <head>
+        <title>Raphael Play</title>
+        <script src="raphael.js"></script>
+
+<script>
+var paper = '';
+
+// mike
+var isDrag = false;
+var rectangle=null;
+var x=0,y=0;
+
+var dragger = function (e){
+	this.dx = e.clientX;
+	this.dy = e.clientY;
+	isDrag = this;
+}
+
+var rectangle=[];
+
+/*Gets rid of repeated ugly grey shade*/
+function getColr(){
+	var Colr="#bfbfbf"
+	while(Colr=="#bfbfbf")	{
+		Colr=Raphael.getColor();
+	}
+	return Colr;
+}
+function test1(){
+
+//'Keep clicking the Run Button and you end\nup looking
+// at a mid-70\'s like Science Fiction\nSpace ship control panel.\n(Sorry
+// Jim, Spock and Scotty we still love you).',60)
+
+// paper.text(50,150,'Keep clicking the Run Button and you end\nup looking at a mid-70\'s like Science Fiction\nSpace ship control panel.\n(Sorry Jim, Spock and Scotty we still love you).',60).attr({'font-size':24, 'stroke-width':1,'text-anchor':'start'  });
+
+// for(var i=0; i<96;i++)
+ for(var i=0; i<10;i++)
+ {
+	y=(Math.floor(i/8))*40;
+	x++;
+	x=x>7?0:x;
+	if(i!=33){
+	  rectangle[i]=paper.rect(x*80,y , 80, 40, 10).attr({fill: getColr()});
+	  rectangle[i].node.style.cursor = 'move';
+	  rectangle[i].mousedown(dragger);
+	}
+ }
+}
+
+/*Raphael Additional Helper note 0 of 3-'parent' prefix*/
+parent.document.onmousedown = function ()
+{
+	if(isDrag){
+		isDrag.attr({fill:getColr()});
+	}
+}
+/*Raphael Additional Helper note 1 of 3-'parent' prefix*/
+parent.document.onmousemove = function (e){
+	/*Raphael Additional Helper note 2 of 3-'window.event' transposed with 'event'*/
+	e = e || event;
+	if (isDrag){
+		isDrag.translate(e.clientX - isDrag.dx, e.clientY - isDrag.dy);
+		paper.safari();
+		isDrag.dx = e.clientX;
+		isDrag.dy = e.clientY;
+	}
+}
+/*Raphael Additional Helper note 3 of 3-'parent' prefix*/
+/*Setup the 'drop' for the mouse release*/
+parent.document.onmouseup = function ()
+{
+	if(isDrag){
+		isDrag.rotate(5);
+		isDrag.attr({fill:getColr()});
+	}
+	isDrag = false;
+};
+
+
+function reset(){
+ alert('reset');
+}
+//////////////////////////////////////////////////////////////////////////////
+
+// window.onload = function() {
+
+  function raphaelStuff() {
+
+  console.log('raphaelStuff');
+
+ // paper = new Raphael(document.getElementById('canvas_container'), 500, 500);
+//  paper = new Raphael(document.getElementById('frame'), 500, 500);
+
+paper = new Raphael(document.getElementById('raphael_test'), 500, 500);
+
+//  paper.text(50,450,'Technique:Bear bones Drag & Drop.',60).attr({fill:'#fffff', 'font-size':20, 'stroke-width':1,'text-anchor':'start'  });
+
+//    paper = new Raphael(document.getElementById('canvas_container'), 500, 500);
+    var rec1 = paper.rect(300, 200, 150, 200);
+    rec1.attr({fill: '#f00'});
+    test1();
+ }
+
+ function setup(){
+  console.log('setup ...');
+ }
+
+ function handleOnload() {
+	/MSIE (\d+\.\d+);/.test(navigator.appVersion);
+	IEVersion=Number(RegExp.$1);
+	if((navigator.appName == 'Microsoft Internet Explorer') && (IEVersion<9)){
+		document.getElementById('browsertrouble').innerHTML='<p>Sorry, "+navigator.appName+" not supported - showing you a picture instead!</p>';
+		document.getElementById('frame').innerHTML='<a href="browsertrouble.html"><img src="images/jssim2.png" style="border:10px"></a>';
+	}else{
+		setTimeout(setup,200);
+		// raphaelStuff();
+		//mikeinit();
+	}
+};
+
+
+
+</script>
+<!--  <style type="text/css">#canvas_container {width: 500px;border: 1px solid #aaa; } </style> -->
+ </head>
+
+<body onload="handleOnload();">
+<div id="canvas_container">
+</div>
+
+<!-- jssim2.png -->
+
+<div id="raphael_test">
+<div class="frame" id="frame">
+  <img id="jsimage" src="images/jssim2.png"/>
+  <div class="leftcolumn" id="leftcolumn">
+    <div id="chipsurround" tabindex="1">
+      <!-- mike -->
+      <div class="chip" id="chip">
+        <span id="waiting">Please wait, graphics initialising...</span>
+        <canvas class="chip" id="chipbg"></canvas>
+     <!--   <canvas class="chip" id="overlay"></canvas>
+        <canvas class="chip" id="hilite"></canvas>
+        <canvas class="chip" id="hitbuffer"></canvas> -->
+ <input type="button" id="reset" value="raphaelStuff" onclick="raphaelStuff()">
+
+      </div>
+    </div> <!-- chipsurround -->
+  </div> <!-- leftcolumn -->
+</div> <!-- frame -->
+</div>
+
+
+</body>
+</html
+
+
+
+
